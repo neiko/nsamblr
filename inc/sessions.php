@@ -45,7 +45,7 @@ class Session {
       return 2; // incorrect password
 
     // Logged correcty
-    return base64_encode($result['id'].'!'.$password.'!'.time());
+    return base64_encode('nsamblr'.'!'.$result['id'].'!'.$md5password.'!'.time());
   }
 
   function read_cookie() {

@@ -107,6 +107,8 @@ function get_login($nick, $password) {
 
   if ($cookie == 1 || $cookie == 2) // 1 means incorrect user, 2 incorrect password, but i'll unify both to avoid bruteforcing
     die(json_error('Wrong user/password'));
+
+  return $cookie;
 }
 
 switch ($_GET['action']) {

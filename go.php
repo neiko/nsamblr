@@ -19,11 +19,6 @@
 
 include('config.php');
 
-function go_to($location) {
-  header('Location: '.$location);
-  die();
-}
-
 function handle_error($status = '404 Not Found', $header, $text) {
   global $config;
 

@@ -40,6 +40,9 @@ echo '<a id="shorten" href="#j">Make it short!</a>';
 
 echo '<div class="clearit"></div>';
 
+if ($session->id)
+  echo '<p class="leave"><a href="'.$config['base'].'admin/">Go to the admin panel</a></p>';
+
 do_footer();
 
 ?>

@@ -21,17 +21,19 @@ include('config.php');
 
 global $config, $session;
 
-$result = mysql_query("SELECT id, short_url, long_url FROM urls");
-
 $short = get_params($_SERVER['PATH_INFO']);
 
 switch ($short[0]) {
   case 'login':
+    if (empty_users())
+      go_to($config['base'].'admin/register/');
+
+    if ($session->id)
+      go_to($config['base'].'admin/');
+
     do_header('login - '.$config['shortener']);
 
     echo '<h3>log into '.$config['shortener'].'</h3>';
-
-    echo '<p>Sorry sir, you need to authenticate.</p>';
 
     echo '<dl>';
     echo '<dt>User name:</dt><dd><input type="text" id="nick" name="nick"/></dd>';
@@ -49,6 +51,31 @@ switch ($short[0]) {
   case 'logout':
     $session->destroy_cookie();
     header('Location: '.$config['base']);
+    die();
+    break;
+  case 'register':
+    if (!$session->id)
+      $session->you_got_to_authenticate();
+
+    do_header('register - '.$config['shortener']);
+
+    echo '<h3>register a new user in '.$config['shortener'].'</h3>';
+
+    echo '<dl>';
+    echo '<dt>User name:</dt><dd><input type="text" id="nick" name="nick"/></dd>';
+    echo '<dt>Password:</dt><dd><input type="password" id="password" name="password"/></dd>';
+    echo '<dt>Mail <span class="hint" title="Unneeded for now">(*)</span>:</dt><dd><input type="text" id="mail" name="mail"/></dd>';
+    echo '</dl>';
+
+    echo '<p id="newurl">Move along :)</p>';
+
+    echo '<a id="register" href="#j">Register</a>';
+
+    echo '<div class="clearit"></div>';
+
+    echo '<p class="leave"><a href="'.$config['base'].'admin/">Go back to the admin panel</a></p>';
+
+    do_footer();
     break;
   default:
     if (!$session->id)
@@ -59,10 +86,10 @@ switch ($short[0]) {
     echo '<h3>URLs created</h3>';
 
     echo '<div class="tools"><ul>';
-    if ($session->id) {
-      echo '<li>Hello, <span>'.$session->nick.'</span></li>';
-      echo '<li class="logout"><a href="'.$config['base'].'admin/logout/">Log out</a></li>';
-    }
+    echo '<li>Hello, <span>'.$session->nick.'</span></li>';
+    echo '<li><a href="'.$config['base'].'">Add a new URL</a></li>';
+    echo '<li><a href="'.$config['base'].'admin/register/">Register a new user</a></li>';
+    echo '<li class="logout"><a href="'.$config['base'].'admin/logout/">Log out</a></li>';
     echo '</ul></div>';
 
     echo '<p>Ordered by creation date. Legend:</p>';

@@ -53,6 +53,28 @@ function escape_quotes($text) {
   return preg_replace('/\"/', '\"', $text);
 }
 
+// Used to know if we're alone.
+function empty_users() {
+    $query = mysql_query("SELECT 1 FROM users LIMIT 1");
+
+    return(!mysql_num_rows($query));
+}
+
+function go_to($location) {
+  header('Location: '.$location);
+  die();
+}
+
+// From http://www.lost-in-code.com/programming/php-code/php-random-string-with-numbers-and-letters/
+function gen_random($length) {
+  $characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  $string = '';    
+  for ($p = 0; $p < $length; $p++) {
+      $string .= $characters[mt_rand(0, strlen($characters) - 1)];
+  }
+  return $string;
+}
+
 function do_header($title = -1, $wider = false) {
   global $config;
 

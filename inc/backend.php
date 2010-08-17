@@ -60,16 +60,6 @@ function get_id() {
     return intval($_GET['id']);
 }
 
-// From http://www.lost-in-code.com/programming/php-code/php-random-string-with-numbers-and-letters/
-function gen_random($length) {
-  $characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-  $string = '';    
-  for ($p = 0; $p < $length; $p++) {
-      $string .= $characters[mt_rand(0, strlen($characters))];
-  }
-  return $string;
-}
-
 function get_urls() {
   global $config;
 
@@ -109,6 +99,27 @@ function get_login($nick, $password) {
     die(json_error('Wrong user/password'));
 
   return $cookie;
+}
+
+function get_register() {
+  // $_GET['nick'], $_GET['password'], $_GET['mail']
+  $nick = clean($_GET['nick']);
+
+  // Check for duplicates
+  $query = mysql_query("SELECT nick FROM users WHERE nick = '$nick' LIMIT 1");
+  if (mysql_affected_rows())
+    return 1;
+
+  if (!preg_match('/[a-zA-Z0-9]*/', $nick))
+    return 2;
+
+  $password = clean($_GET['password']);
+  if (empty($password))
+    return 3;
+
+  $mail = clean($_GET['mail']);
+
+  return array('nick' => $nick, 'password' => $password, 'mail' => $mail); 
 }
 
 switch ($_GET['action']) {
@@ -153,6 +164,30 @@ switch ($_GET['action']) {
     $cookie = get_login($_GET['nick'], $_GET['password']);
     setcookie('nsamblr_session', $cookie, time() + 608400, $config['base']);
     die(json(array('auth' => 'ok')));
+    break;
+  case 'register':
+    $register = get_register();
+
+    if ($register == 1)
+      die(json_error('That user already exists'));
+
+    if ($register == 2)
+      die(json_error('Invalid characters in the nick, only alphanumeric chars are allowed'));
+
+    if ($register == 3)
+      die(json_error('You need to specify a password'));
+
+    $nick = $register['nick'];
+    $mail = $register['mail'];
+    $salt = gen_random(10);
+    $password = md5($salt.$register['password']);
+
+    mysql_query("INSERT INTO users (`nick`, `password`, `mail`, `salt`) VALUES('$nick', '$password', '$mail', '$salt')");
+
+    if (mysql_affected_rows() && mysql_affected_rows() != -1)
+      die(json(array('newurl' => escape_quotes('User registered correctly. <a href="#j" id="anotherone">Register another one</a>'))));
+    else
+      die(json_error('Error registering'));
     break;
   default:
     die(json_error('wut?'));

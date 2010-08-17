@@ -89,8 +89,7 @@ class Session {
   function you_got_to_authenticate() {
     global $config;
 
-    header('Location: '.$config['base'].'admin/login/');
-    die();
+    go_to($config['base'].'admin/login/');
   }
 
 }

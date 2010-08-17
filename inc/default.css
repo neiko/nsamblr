@@ -143,7 +143,10 @@ a#shorten.disabled:hover,
 a#shorten.disabled:active,
 a#login,
 a#login.disabled:hover,
-a#login.disabled:active {
+a#login.disabled:active,
+a#register,
+a#register.disabled:hover,
+a#register.disabled:active {
   margin: 9px 1px 1px 0;
   display: block;
   padding: 5px 7px;
@@ -161,16 +164,19 @@ a#login.disabled:active {
   box-shadow: 1px 1px 1px #ddd;
 }
 a#shorten:hover,
-a#login:hover {
+a#login:hover,
+a#register:hover {
   text-decoration: none;
 }
 a#shorten:active,
-a#login:active {
+a#login:active,
+a#register:active {
   margin: 10px 0 0 1px;
   box-shadow: 0 0 1px #ddd;
 }
 a#shorten.disabled,
 a#login.disabled,
+a#register.disabled,
 input:disabled {
   opacity: 0.7;
   cursor: default;
@@ -232,6 +238,9 @@ div.tools li {
 }
 div.tools li span {
   font-weight: bold;
+}
+div.tools li a {
+  color: white;
 }
 div.tools li.logout {
   background: #b00;

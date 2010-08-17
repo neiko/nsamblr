@@ -18,7 +18,8 @@
  */
 
 include('config.php');
-global $config;
+
+global $config, $session;
 
 $result = mysql_query("SELECT id, short_url, long_url FROM urls");
 
@@ -33,8 +34,8 @@ switch ($short[0]) {
     echo '<p>Sorry sir, you need to authenticate.</p>';
 
     echo '<dl>';
-    echo '<dt>User name:</dt><dd><input type="text" id="nick"/></dd>';
-    echo '<dt>Password:</dt><dd><input type="password" id="password"/></dd>';
+    echo '<dt>User name:</dt><dd><input type="text" id="nick" name="nick"/></dd>';
+    echo '<dt>Password:</dt><dd><input type="password" id="password" name="password"/></dd>';
     echo '</dl>';
 
     echo '<p id="newurl">Move along :)</p>';
@@ -45,10 +46,26 @@ switch ($short[0]) {
 
     do_footer();
     break;
+  case 'logout':
+    $session->destroy_cookie();
+    header('Location: '.$config['base']);
+    break;
   default:
+    if (!$session->id)
+      $session->you_got_to_authenticate();
+
     do_header('administration panel - '.$config['shortener'], true);
 
-    echo '<h3>URLs created</h3><p>Ordered by creation date. Legend:</p>';
+    echo '<h3>URLs created</h3>';
+
+    echo '<div class="tools"><ul>';
+    if ($session->id) {
+      echo '<li>Hello, <span>'.$session->nick.'</span></li>';
+      echo '<li class="logout"><a href="'.$config['base'].'admin/logout/">Log out</a></li>';
+    }
+    echo '</ul></div>';
+
+    echo '<p>Ordered by creation date. Legend:</p>';
 
     echo '<ul>';
     echo '<li><span class="active">A</span> - Active/Activate</li>';
@@ -58,8 +75,8 @@ switch ($short[0]) {
 
     $query = mysql_query("SELECT id, short_url, long_url, ip, date, status FROM urls ORDER BY date");
 
-    if (empty($result))
-      echo 'No URLs created yet.';
+    if (!mysql_num_rows($query))
+      echo '<h2>No URLs created yet.</h2><p>Create <a href="'.$config['base'].'">the first one</a>!</p>';
     else {
       echo '<table>'."\n";
       echo '<tr><th>ID</th><th>Short</th><th>Long</th><th>IP</th><th>Date</th><th title="Status">S</th><th title="Actions">A</th></tr>'."\n";

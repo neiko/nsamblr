@@ -32,6 +32,7 @@ body {
   -webkit-box-shadow: 0px 2px 3px #bbb;
   box-shadow: 0px 2px 3px #bbb;
   color: #666;
+  position: relative;
 }
 #wrapper {
   padding: 20px 15px;
@@ -67,9 +68,6 @@ ul {
 li {
   padding: 0 0 3px;
 }
-li a {
-  padding: 1px 0 1px 21px;
-}
 #wrapper p {
   margin: 12px 0 0 7px;
   display: inline-block;
@@ -89,6 +87,7 @@ li a {
 table {
   margin: 8px 0 0;
   border: 1px solid #e5e5e5;
+  width: 100%;
 }
 th {
   text-align: left;
@@ -208,4 +207,39 @@ p.leave {
 p.warning {
   font-size: 10pt;
   font-weight: bold;
+}
+div.tools {
+  position: absolute;
+  right: 18px;
+  top: 18px;
+}
+div.tools ul {
+  margin: 0;
+}
+div.tools li {
+  padding: 4px 6px;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+  -moz-box-shadow: 1px 1px 1px #ddd;
+  -webkit-box-shadow: 1px 1px 1px #ddd;
+  box-shadow: 1px 1px 1px #ddd;
+  display: inline-block;
+  background: #27b;
+  margin: 0 3px 0 0;
+  text-shadow: 0px -1px 0px #048;
+  color: white;
+}
+div.tools li span {
+  font-weight: bold;
+}
+div.tools li.logout {
+  background: #b00;
+}
+div.tools li.logout a {
+  text-shadow: 0px -1px 0px #500;
+  color: white;
+}
+h2 {
+  margin: 7px 0 0;
 }

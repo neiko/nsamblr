@@ -151,7 +151,7 @@ switch ($_GET['action']) {
     break;
   case 'login':
     $cookie = get_login($_GET['nick'], $_GET['password']);
-    setcookie('nsamblr_session', $cookie);
+    setcookie('nsamblr_session', $cookie, time() + 608400, $config['base']);
     die(json(array('auth' => 'ok')));
     break;
   default:

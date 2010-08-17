@@ -75,6 +75,16 @@ function gen_random($length) {
   return $string;
 }
 
+function url_exists($url) {
+  $query = mysql_query("SELECT id FROM urls WHERE short_url = '$url' LIMIT 1");
+  $result = mysql_fetch_row($query, MYSQL_ASSOC);
+
+  if(empty($result))
+    return false;
+  else
+    return true;
+}
+
 function do_header($title = -1, $wider = false) {
   global $config;
 

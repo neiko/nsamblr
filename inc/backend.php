@@ -75,7 +75,9 @@ function get_urls() {
     die(json_error('This ain\'t an URL!'));
 
   if (empty($_GET['short']))
-    $short = gen_random(6);
+    do {
+      $short = gen_random(6);
+    } while (url_exists($short));
   else {
     $short = clean($_GET['short']);
     if (!preg_match('/^([a-zA-Z]+)$/', $short))
@@ -127,7 +129,10 @@ switch ($_GET['action']) {
     $urls = get_urls();
     $short = $urls['short'];
     $long = $urls['long'];
-    $ip = $_SERVER['REMOTE_ADDR'];
+    $ip = $session->ip;
+
+    if(url_exists($short))
+      die(json_error('That short URL already exists'));
 
     mysql_query("INSERT INTO urls (`short_url`, `long_url`, `ip`) VALUES('$short', '$long', '$ip')");
 

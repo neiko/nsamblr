@@ -50,6 +50,8 @@ class Session {
   function read_cookie() {
     global $config;
 
+    $this->ip = $_SERVER['REMOTE_ADDR'];
+
     if (isset($_COOKIE['nsamblr_session']))
       $cookie = explode('!', base64_decode($_COOKIE['nsamblr_session']));
     else
@@ -71,7 +73,6 @@ class Session {
         $this->id = $result['id'];
         $this->nick = $result['nick'];
         $this->password = $result['password'];
-        $this->ip = $_SERVER['REMOTE_ADDR'];
         mysql_query('UPDATE users SET ip = \''.$this->ip.'\' WHERE id = '.$this->id);
 
         $mail = $result['mail'];

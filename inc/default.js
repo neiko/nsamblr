@@ -5,6 +5,7 @@ var a = activate = 'activate';
 var s = suspend = 'suspend';
 var r = remove = 'remove';
 var n = 'new'; // new is reserved :(
+var l = login = 'login';
 var working;
   
 function d(id, action) {
@@ -30,6 +31,21 @@ function d(id, action) {
       var url = base + 'inc/backend.php?action=' + action + '&short=' + encodeURIComponent(short) + '&long=' + encodeURIComponent(long);
       working = 1;
       break;
+    case l:
+      if (working)
+        return false;
+      var nick = $('#nick').val();
+      var password = $('#password').val();
+      $('#newurl').removeAttr('class');
+      if ($('#newurl').html() == 'Move along :)') // animate only the first time
+        $('#newurl').animate({ opacity: 1 }, 100);
+      $('#newurl').html('Wait...');
+      $('#login').attr('class', 'disabled');
+      $('#nick').attr('disabled', 'disabled');
+      $('#password').attr('disabled', 'disabled');
+      var url = base + 'inc/backend.php?action=' + action + '&nick=' + encodeURIComponent(nick) + '&password=' + encodeURIComponent(password);
+      working = 1;
+      break;
     default:
       break;
   }
@@ -37,14 +53,24 @@ function d(id, action) {
   $.getJSON(url,
     function(data) {
       if (data.error) {
-        if (action == n) {
-          $('#newurl').attr('class', 'error');
-          $('#newurl').html(data.error);
-          $('#shorten').removeAttr('class');
-          working = 0;
-        } else
-          alert('Error: ' + data.error);
-
+        switch (action) {
+          case l:
+          case n:
+            $('#newurl').attr('class', 'error');
+            $('#newurl').html(data.error);
+            if (action == n)
+              var button = '#shorten';
+            else {
+              var button = '#login';
+              $('#nick').removeAttr('disabled');
+              $('#password').removeAttr('disabled');
+            }
+            $(button).removeAttr('class');
+            working = 0;
+            break;
+          default:
+            alert('Error: ' + data.error);
+        }
         return false;
       }
       switch (action) {
@@ -66,6 +92,10 @@ function d(id, action) {
           $('#shorten').removeAttr('class');
           working = 0;
           break;
+        case l:
+          $('#newurl').html('All right, redirecting...');
+          location.href = base + 'admin/';
+          break;
         default:
           alert('wut?');
       }
@@ -76,5 +106,8 @@ function d(id, action) {
 $(function() {
   $('#shorten').click(function() {
     d(-1, n);    
+  });
+  $('#login').click(function() {
+    d(-1, l);    
   });
 });

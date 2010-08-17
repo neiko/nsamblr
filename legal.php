@@ -29,7 +29,7 @@ echo '<p>Insert your legal info here...</p>';
 
 echo '<div class="clearit"></div>';
 
-echo '<p><a href="'.$config['base'].'">Go back to '.$config['shortener'].'</a></p>';
+echo '<p class="leave"><a href="'.$config['base'].'">Go back to '.$config['shortener'].'</a></p>';
 
 do_footer();
 

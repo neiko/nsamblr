@@ -27,4 +27,14 @@ CREATE TABLE IF NOT EXISTS `urls` (
   `status` enum('active','suspended') NOT NULL DEFAULT 'active',
   PRIMARY KEY (`id`),
   UNIQUE KEY `id` (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=117 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=119 ;
+
+CREATE TABLE IF NOT EXISTS `users` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nick` char(32) NOT NULL,
+  `password` char(64) NOT NULL,
+  `ip` char(15) NOT NULL,
+  `mail` char(64) NOT NULL,
+  `salt` char(10) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;

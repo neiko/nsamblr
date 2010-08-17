@@ -97,6 +97,18 @@ function get_urls() {
   return array('long' => $long, 'short' => $short);    
 }
 
+function get_login($nick, $password) {
+  global $session;
+
+  if (empty($nick) || empty($password))
+    die(json_error('Both fields are mandatory'));
+
+  $cookie = $session->auth($nick, $password);
+
+  if ($cookie == 1 || $cookie == 2) // 1 means incorrect user, 2 incorrect password, but i'll unify both to avoid bruteforcing
+    die(json_error('Wrong user/password'));
+}
+
 switch ($_GET['action']) {
   case 'new':
     $urls = get_urls();
@@ -134,6 +146,11 @@ switch ($_GET['action']) {
       die(check_status($id));
     else
       die(json_error('Error activating'));
+    break;
+  case 'login':
+    $cookie = get_login($_GET['nick'], $_GET['password']);
+    setcookie('nsamblr_session', $cookie);
+    die(json(array('auth' => 'ok')));
     break;
   default:
     die(json_error('wut?'));

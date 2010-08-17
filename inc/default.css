@@ -120,7 +120,8 @@ li span.removed {
 tr.removed {
   opacity: 0.3;
 }
-input[type=text] {
+input[type=text],
+input[type=password] {
   width: 100px;
   font-size: 9pt;
   padding: 2px;
@@ -140,7 +141,10 @@ input[type=text].short {
 }
 a#shorten,
 a#shorten.disabled:hover,
-a#shorten.disabled:active {
+a#shorten.disabled:active,
+a#login,
+a#login.disabled:hover,
+a#login.disabled:active {
   margin: 9px 1px 1px 0;
   display: block;
   padding: 5px 7px;
@@ -157,14 +161,18 @@ a#shorten.disabled:active {
   -webkit-box-shadow: 1px 1px 1px #ddd;
   box-shadow: 1px 1px 1px #ddd;
 }
-a#shorten:hover {
+a#shorten:hover,
+a#login:hover {
   text-decoration: none;
 }
-a#shorten:active {
+a#shorten:active,
+a#login:active {
   margin: 10px 0 0 1px;
   box-shadow: 0 0 1px #ddd;
 }
-a#shorten.disabled {
+a#shorten.disabled,
+a#login.disabled,
+input:disabled {
   opacity: 0.7;
   cursor: default;
 }
@@ -191,4 +199,13 @@ p#newurl {
 p#newurl.error {
   font-weight: bold;
   color: #d00;
+}
+p.leave {
+  display: block !important;
+  text-align: right;
+  font-size: 10pt;
+}
+p.warning {
+  font-size: 10pt;
+  font-weight: bold;
 }

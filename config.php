@@ -24,8 +24,7 @@ $config['db_hostname'] = '';
 $config['db_database'] = '';
 
 // This is the name of the shortener, it'll appear in several pages
-// It doesn't have to be the hostname, i'll use it here as an example
-$config['shortener'] = $_SERVER['SERVER_NAME'];
+$config['shortener'] = 'fa.ke';
 
 // This may change in your installation (it should not, remember that this is a shortener :-)
 $config['base'] = '/';
@@ -34,13 +33,15 @@ $config['base'] = '/';
 // If you change it, you'll invalidate all the cookies, but you won't lose data.
 $config['site_id'] = '';
 
-// Max length for long URLs
-$config['max_long_length'] = 1000;
-
-// Max length for short urls, it does not take into account the hostname nor the trailing slash
+// Max length for URLs
+// Max length for short urls does not take into account the hostname nor the slash
 $config['max_short_length'] = 12;
+$config['max_long_length'] = 1000;
 
 include('inc/db.php');
 include('inc/tools.php');
+include('inc/sessions.php');
+
+$session = new Session();
 
 ?>

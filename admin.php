@@ -25,8 +25,25 @@ $result = mysql_query("SELECT id, short_url, long_url FROM urls");
 $short = get_params($_SERVER['PATH_INFO']);
 
 switch ($short[0]) {
-  case 'view':
-    echo 'wow!!!';
+  case 'login':
+    do_header('login - '.$config['shortener']);
+
+    echo '<h3>log into '.$config['shortener'].'</h3>';
+
+    echo '<p>Sorry sir, you need to authenticate.</p>';
+
+    echo '<dl>';
+    echo '<dt>User name:</dt><dd><input type="text" id="nick"/></dd>';
+    echo '<dt>Password:</dt><dd><input type="password" id="password"/></dd>';
+    echo '</dl>';
+
+    echo '<p id="newurl">Move along :)</p>';
+
+    echo '<a id="login" href="#j">Log in</a>';
+
+    echo '<div class="clearit"></div>';
+
+    do_footer();
     break;
   default:
     do_header('administration panel - '.$config['shortener'], true);

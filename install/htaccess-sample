@@ -1,0 +1,6 @@
+Options         +FollowSymlinks
+RewriteEngine   On
+RewriteRule     ^legal/$        /legal.php [L]
+RewriteRule     ^admin/(.*)$    /admin.php/$1 [L]
+RewriteRule     ^([a-zA-Z]+)$   /go.php/$1
+

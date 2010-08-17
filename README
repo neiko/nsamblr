@@ -1,0 +1,16 @@
+nsamblr
+
+nsamblr is a very simple and fast URL shortener.
+
+It features a nifty and easy to manage administration interface (wip).
+
+If you want to install it:
+
+1) Create a new user in MySQL, then a new database, and grant all the privileges.
+2) $ mysql -uuser -ppassword database < nsamblr.sql
+3) Set the corresponding configuration values in config.php
+4) Rename htaccess-sample to .htaccess, and make sure you set AllowOverride to
+   'All' in your apache configuration file.
+
+Enjoy :-)
+David

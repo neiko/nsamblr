@@ -84,7 +84,7 @@ function do_footer($show_copy = true) {
   echo '</div>'."\n";
   if ($show_copy) {
     echo '<div id="footer">'."\n";
-    echo '<a href="'.$config['base'].'legal/">legal</a> - <span>'.$config['shortener'].'</span> uses <span>nsamblr</span>'."\n";
+    echo '<a href="'.$config['base'].'legal/">legal</a> - <span>'.$config['shortener'].'</span> uses <a href="http://github.com/egns/nsamblr/" target="_blank">nsamblr</a>'."\n";
     echo '</div>'."\n";
   }
   echo '</div>'."\n";

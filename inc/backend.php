@@ -81,7 +81,7 @@ function get_urls() {
   if (strlen($long > $config['max_long_length']))
     die(json_error('Long URL is too long :-)'));
 
-  if (!preg_match('/^(http(s){0,1}|ftp):\/\//', $long))
+  if (!preg_match('/^(https?|ftp|irc):\/\/[a-zA-Z0-9\-]*\.\b[a-zA-Z]{2,4}\b/', $long))
     die(json_error('This ain\'t an URL!'));
 
   if (empty($_GET['short']))

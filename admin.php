@@ -61,16 +61,16 @@ switch ($short[0]) {
     if (empty($result))
       echo 'No URLs created yet.';
     else {
-      echo '<table>';
-      echo '<tr><th>ID</th><th>Short</th><th>Long</th><th>IP</th><th>Date</th><th title="Status">S</th><th title="Actions">A</th></tr>';
+      echo '<table>'."\n";
+      echo '<tr><th>ID</th><th>Short</th><th>Long</th><th>IP</th><th>Date</th><th title="Status">S</th><th title="Actions">A</th></tr>'."\n";
 
       while ($row = mysql_fetch_array($query, MYSQL_ASSOC)) {
-        echo '<tr id="link-'.$row['id'].'">';
-        echo '<td>'.$row['id'].'</td>';
-        echo '<td><a href="'.$config['base'].$row['short_url'].'">'.$row['short_url'].'</td>';
-        echo '<td><a href="'.$row['long_url'].'">'.short($row['long_url']).'</td>';
-        echo '<td>'.$row['ip'].'</td>';
-        echo '<td>'.$row['date'].'</td>';
+        echo '<tr id="link-'.$row['id'].'">'."\n";
+        echo '<td>'.$row['id'].'</td>'."\n";
+        echo '<td><a href="'.$config['base'].$row['short_url'].'">'.$row['short_url'].'</td>'."\n";
+        echo '<td><a href="'.$row['long_url'].'">'.short($row['long_url']).'</td>'."\n";
+        echo '<td>'.$row['ip'].'</td>'."\n";
+        echo '<td>'.$row['date'].'</td>'."\n";
 
         echo '<td id="status-'.$row['id'].'">';
         switch ($row['status']) {
@@ -83,7 +83,7 @@ switch ($short[0]) {
           default:
             echo '<span title="Unknown">?</span>';
         }
-        echo '</td>';
+        echo '</td>'."\n";
 
         echo '<td id="buttons-'.$row['id'].'">';
         if ($row['status'] == 'active')
@@ -91,13 +91,13 @@ switch ($short[0]) {
         elseif ($row['status'] == 'suspended')
           echo '<a href="#j" title="Activate" onclick="d('.$row['id'].', a)">A</a>';
         echo ' <a href="#j" title="Permanently remove" onclick="d('.$row['id'].', r)">R</a>';
-        echo '</td>';
+        echo '</td>'."\n";
 
-        echo '</tr>';
+        echo '</tr>'."\n";
       }
     }
 
-    echo '</table>';
+    echo '</table>'."\n";
 
     do_footer();
 }

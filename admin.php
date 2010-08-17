@@ -67,8 +67,8 @@ switch ($short[0]) {
       while ($row = mysql_fetch_array($query, MYSQL_ASSOC)) {
         echo '<tr id="link-'.$row['id'].'">'."\n";
         echo '<td>'.$row['id'].'</td>'."\n";
-        echo '<td><a href="'.$config['base'].$row['short_url'].'">'.$row['short_url'].'</td>'."\n";
-        echo '<td><a href="'.$row['long_url'].'">'.short($row['long_url']).'</td>'."\n";
+        echo '<td><a href="'.$config['base'].$row['short_url'].'">'.$row['short_url'].'</a></td>'."\n";
+        echo '<td><a href="'.$row['long_url'].'">'.short($row['long_url']).'</a></td>'."\n";
         echo '<td>'.$row['ip'].'</td>'."\n";
         echo '<td>'.$row['date'].'</td>'."\n";
 

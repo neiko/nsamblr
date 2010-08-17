@@ -48,7 +48,7 @@ function check_status($id) {
       $buttons = '<span title="Unknown">?</span>';
   }
 
-  $buttons .= ' <a href="#j" title="Permanently delete" onclick="d('.$row['id'].', r)">R</a>';
+  $buttons .= ' <a href="#j" title="Permanently remove" onclick="d('.$row['id'].', r)">R</a>';
 
   return json(array('status' => escape_quotes($status), 'buttons' => escape_quotes($buttons)));
 }

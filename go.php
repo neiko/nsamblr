@@ -24,6 +24,20 @@ function go_to($location) {
   die();
 }
 
+function handle_error($status = '404 Not Found', $header, $text) {
+  global $config;
+
+  header('HTTP/1.0 '.$status);
+  header('Status: '.$status);
+  do_header();
+  echo '<h3>'.$header.'</h3>';
+  echo '<p class="warning">Sorry :-(</p>';
+  echo '<p>'.$text.'</p>';
+  echo '<p class="leave"><a href="'.$config['base'].'">Go to '.$config['shortener'].'</a></p>';
+  do_footer();
+  die();
+}
+
 $short = get_params($_SERVER['PATH_INFO']);
 
 $short_url = clean($short[0]);
@@ -31,16 +45,17 @@ $short_url = clean($short[0]);
 if (empty($short_url))
   go_to('/');
 
-$query = mysql_query("SELECT long_url FROM urls WHERE short_url = CONVERT('$short_url' USING binary) LIMIT 1");
+$query = mysql_query("SELECT long_url, status FROM urls WHERE short_url = CONVERT('$short_url' USING binary) LIMIT 1");
 
 $result = mysql_fetch_row($query, MYSQL_ASSOC);
 
 if (empty($result))
-  go_to('/');
+  handle_error('404 Not Found', 'Not Found', 'We couldn\'t find that URL.');
 
-while ($row = $result) {
-  $long_url = $row['long_url'];
-  go_to($row['long_url']);
-}
+if ($result['status'] == 'suspended')
+  handle_error('403 Forbidden', 'Suspended URL', 'This URL has been suspended.');
+
+$long_url = $result['long_url'];
+go_to($long_url);
 
 ?>
